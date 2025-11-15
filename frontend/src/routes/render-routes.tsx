@@ -22,7 +22,6 @@ const RenderRoutes = () => {
           </Route>
 
           <Route element={<PrivateRoutesRedirect />}>
-            <Route index element={<Navigate to="/subscriptions" replace />} />
             {PrivateRoutes.map(({ path, element, layout: Layout }) => (
               <Route
                 key={path}

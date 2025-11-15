@@ -20,6 +20,8 @@ import { GetTenantByNameService } from "@/services/tenant.services";
 import { toast } from "sonner";
 
 const Login = () => {
+    const gymId = useUserStore((state) => state.gymId);
+    const gymName = useUserStore((state) => state.gymName);
     const setUserInfo = useUserStore((state) => state.setUserInfo);
 
     const [isTenantValid, setIsTenantValid] = useState<boolean | null>(null);
@@ -28,12 +30,15 @@ const Login = () => {
     // ✅ Formik setup
     const formik = useFormik({
         initialValues: {
-            tenant: "",
+            tenant: gymName || "",
+            tenantId: gymId || "",
+
             email: "",
             password: "",
         },
         validationSchema: Yup.object({
             tenant: Yup.string().required("Tenant is required"),
+            tenantId: Yup.string().required("Tenant ID is required"),
             email: Yup.string().email("Invalid email").required("Email is required"),
             password: Yup.string().required("Password is required"),
         }),
@@ -55,7 +60,7 @@ const Login = () => {
                     name: "John Doe",
                     email: "yDv0W@example.com",
                     role: "admin",
-                    gymName: "Gym Name",
+                    gymName: "validTenant",
                     gymId: "gym-id",
                     token: "token",
                 });
@@ -78,13 +83,14 @@ const Login = () => {
             try {
                 // const result = await GetTenantByNameService(tenantValue);
                 // setIsTenantValid(!!result.data.tenantId)
+                // formik.setFieldValue("tenantId", result.data.tenantId || "");
 
                 // Fake async validation
                 await new Promise((resolve) => setTimeout(resolve, 1000));
-                setIsTenantValid(tenantValue === "validTenant"); // Example condition
+                // Example condition
+                formik.setFieldValue("tenantId", tenantValue === "validTenant" ? "some-tenant-id" : "");
             } catch (error) {
                 toast.error("Error validating tenant");
-                setIsTenantValid(null) // or false
                 console.error("Error validating tenant", error);
             } finally {
                 setIsTenantValidating(false);
@@ -121,10 +127,10 @@ const Login = () => {
                                     className="pr-10" // add right padding so text doesn't overlap icons
                                 />
                                 {/* Validation Icons */}
-                                {!isTenantValidating && isTenantValid === true && (
+                                {!isTenantValidating && formik.values.tenant && formik.values.tenantId && (
                                     <CheckIcon className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-green-500" />
                                 )}
-                                {!isTenantValidating && isTenantValid === false && (
+                                {!isTenantValidating && formik.values.tenant && !formik.values.tenantId && (
                                     <XIcon className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-red-500" />
                                 )}
                                 {isTenantValidating && (
@@ -191,7 +197,7 @@ const Login = () => {
                                     formik.isSubmitting ||
                                     !formik.isValid ||
                                     !formik.dirty ||
-                                    isTenantValid !== true
+                                    !formik.values.tenantId
                                 }
                             >
                                 {formik.isSubmitting ? <Spinner /> : "Login"}

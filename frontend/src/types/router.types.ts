@@ -5,4 +5,5 @@ export type routerType = {
     path: string;
     element: ReactNode;
     layout: any;
+    icon?: React.ComponentType<any>;
 }
