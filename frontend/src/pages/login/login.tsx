@@ -27,7 +27,6 @@ const Login = () => {
     const [isTenantValid, setIsTenantValid] = useState<boolean | null>(null);
     const [isTenantValidating, setIsTenantValidating] = useState<boolean>(false);
 
-    // ✅ Formik setup
     const formik = useFormik({
         initialValues: {
             tenant: gymName || "",

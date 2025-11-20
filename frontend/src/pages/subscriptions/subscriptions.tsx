@@ -6,6 +6,8 @@ import type { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal } from 'lucide-react'
 import { useState } from 'react'
 import { CreateSubscriptionModal } from './create-subscription.modal'
+import { useQuery } from '@tanstack/react-query'
+import { GetSubscriptionListService } from '@/services/subscription.services'
 
 const data: Payment[] = [
     {
@@ -137,6 +139,16 @@ const Subscriptions = () => {
     // row selection
     const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({})
 
+    // const { data, isFetching } = useQuery({
+    //     queryKey: ['todos'],
+    //     queryFn: () => GetSubscriptionListService({
+    //         page: pagination.pageIndex + 1,
+    //         limit: pagination.pageSize,
+    //         search: search,
+    //     }),
+    //     select: (res) => res.data,
+    // })
+
     return (
         <>
             <DataTable
@@ -159,9 +171,7 @@ const Subscriptions = () => {
                 }}
                 showColumnVisibility
                 additionalComponents={[
-                    <CreateSubscriptionModal
-                        onCreate={() => { }}
-                    />
+                    <CreateSubscriptionModal />
                 ]}
             />
         </>

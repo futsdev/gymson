@@ -48,6 +48,9 @@ interface DataTableProps<TData, TValue> {
     }
 }
 
+// TODO: need to pass isLoading prop to show loading state
+// can also pass loading skeleton or a progess bar component
+
 function DataTable<TData, TValue>({
     columns,
     data,
