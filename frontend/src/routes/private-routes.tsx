@@ -1,7 +1,7 @@
 import type { routerType } from "@/types/router.types";
 import * as Page from "@/pages";
 import MainLayout from "@/layouts/main-layout";
-import { Calendar, Home, Inbox, Settings, User } from "lucide-react";
+import { Calendar, Dumbbell, Home, Inbox, Settings, User } from "lucide-react";
 
 const PrivateRoutes: routerType[] = [
     {
@@ -12,11 +12,11 @@ const PrivateRoutes: routerType[] = [
         icon: Home,
     },
     {
-        title: "Subscriptions",
-        path: "/subscriptions",
-        element: <Page.Subscriptions />,
+        title: "Gyms",
+        path: "/gyms",
+        element: <Page.Gyms />,
         layout: MainLayout,
-        icon: Inbox,
+        icon: Dumbbell,
     },
     {
         title: "Users",
@@ -31,6 +31,13 @@ const PrivateRoutes: routerType[] = [
         element: <Page.Users />,
         layout: MainLayout,
         icon: User,
+    },
+    {
+        title: "Subscriptions",
+        path: "/subscriptions",
+        element: <Page.Subscriptions />,
+        layout: MainLayout,
+        icon: Inbox,
     },
     {
         title: "Calendar",

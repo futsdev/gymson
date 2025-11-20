@@ -3,8 +3,9 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import type { ColumnDef } from '@tanstack/react-table'
-import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
-import React, { useState } from 'react'
+import { MoreHorizontal } from 'lucide-react'
+import { useState } from 'react'
+import { CreateSubscriptionModal } from './create-subscription.modal'
 
 const data: Payment[] = [
     {
@@ -137,26 +138,33 @@ const Subscriptions = () => {
     const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({})
 
     return (
-        <DataTable
-            columns={columns}
-            data={data}
-            // search props
-            searchProps={{
-                search,
-                onSearchChange: setSearch,
-            }}
-            // pagination props
-            paginationProps={{
-                pagination,
-                onPaginationChange: setPagination,
-            }}
-            // row selection props
-            rowSelectionProps={{
-                rowSelection,
-                onRowSelectionChange: setRowSelection,
-            }}
-            showColumnVisibility
-        />
+        <>
+            <DataTable
+                columns={columns}
+                data={data}
+                // search props
+                searchProps={{
+                    search,
+                    onSearchChange: setSearch,
+                }}
+                // pagination props
+                paginationProps={{
+                    pagination,
+                    onPaginationChange: setPagination,
+                }}
+                // row selection props
+                rowSelectionProps={{
+                    rowSelection,
+                    onRowSelectionChange: setRowSelection,
+                }}
+                showColumnVisibility
+                additionalComponents={[
+                    <CreateSubscriptionModal
+                        onCreate={() => { }}
+                    />
+                ]}
+            />
+        </>
     )
 }
 

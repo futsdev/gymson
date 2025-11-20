@@ -55,6 +55,7 @@ function DataTable<TData, TValue>({
     searchProps,
     paginationProps,
     rowSelectionProps,
+    additionalComponents = [],
 }: DataTableProps<TData, TValue>) {
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({})
@@ -90,6 +91,12 @@ function DataTable<TData, TValue>({
                             }
                             className="max-w-sm"
                         />}
+
+                    {additionalComponents.map((Component, index) => (
+                        <div key={index} className="ml-4">
+                            {Component}
+                        </div>
+                    ))}
 
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
